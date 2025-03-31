@@ -67,7 +67,6 @@ class Maze:
         self._draw_cell(self._num_cols-1, self._num_rows-1)
 
     def _break_walls_r(self, i, j):
-        def _break_walls_r(self, i, j):
         # Mark the current cell as visited
         self._cells[i][j].visited = True
 
@@ -115,3 +114,9 @@ class Maze:
 
             self._draw_cell(i, j)
             self._break_walls_r(next_i, next_j)
+
+    def _reset_cells_visited(self):
+    
+        for row in self._cells: 
+            for cell in row:
+                cell.visited = False
