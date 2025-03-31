@@ -1,7 +1,7 @@
 from maze import Line, Point
 
 class Cell:
-    def __init__(self,x1,y1,x2,y2,win):
+    def __init__(self,x1,y1,x2,y2,win = None):
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
@@ -14,6 +14,9 @@ class Cell:
         self.has_bottom_wall = True
 
     def draw(self):
+        if self._win is None:
+            return
+
         if self.has_left_wall:
             left_wall = Line(Point(self._x1,self._y1),Point(self._x1,self._y2))
             left_wall.draw(self._win)
@@ -34,6 +37,8 @@ class Cell:
             bottom_wall.draw(self._win)
 
     def draw_move(self, to_cell, undo=False):
+        if self._win is None:
+            return
         centre_x1 = (self._x1 + self._x2)//2
         centre_y1 = (self._y1 + self._y2)//2
 
