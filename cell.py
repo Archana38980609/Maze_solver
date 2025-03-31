@@ -1,13 +1,14 @@
 from maze import Line, Point
 
 class Cell:
-    def __init__(self,x1,y1,x2,y2,win = None):
+    def __init__(self,x1,y1,x2,y2,win = None,visited = False):
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
         self._y2 = y2
         self._win = win
-
+        self.visited = visited
+        
         self.has_left_wall = True
         self.has_right_wall = True
         self.has_top_wall = True
