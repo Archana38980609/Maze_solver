@@ -120,3 +120,72 @@ class Maze:
         for row in self._cells: 
             for cell in row:
                 cell.visited = False
+
+    def solve(self):
+        # Reset all cells to not visited
+        self._reset_cells_visited()
+        # Call the recursive solver starting at the entrance (top-left)
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, i, j):
+        # Call the animate method to show progress
+        self._animate()
+    
+        # Mark the current cell as visited
+        self._cells[i][j].visited = True
+    
+        # If we're at the end cell (bottom-right), we've solved it
+        if i == self._num_cols - 1 and j == self._num_rows - 1:
+            return True
+    
+        # Try moving in each direction (left, right, up, down)
+    
+        # Try left
+        if (i > 0 and 
+            not self._cells[i][j].has_left_wall and 
+            not self._cells[i-1][j].visited):
+            # Draw move to the left
+            self._cells[i][j].draw_move(self._cells[i-1][j])
+            # Recursively try this path
+            if self._solve_r(i-1, j):
+                return True
+            # If it didn't work, undo the move
+            self._cells[i][j].draw_move(self._cells[i-1][j], undo=True)
+    
+        # Try right
+        if (i < self._num_cols - 1 and 
+            not self._cells[i][j].has_right_wall and 
+            not self._cells[i+1][j].visited):
+            # Draw move to the right
+            self._cells[i][j].draw_move(self._cells[i+1][j])
+            # Recursively try this path
+            if self._solve_r(i+1, j):
+                return True
+
+
+            # Try up
+            if (j > 0 and 
+                not self._cells[i][j].has_top_wall and 
+                not self._cells[i][j-1].visited):
+                # Draw move upward
+                self._cells[i][j].draw_move(self._cells[i][j-1])
+                # Recursively try this path
+                if self._solve_r(i, j-1):
+                    return True
+                # If it didn't work, undo the move
+                self._cells[i][j].draw_move(self._cells[i][j-1], undo=True)
+    
+                # Try down
+                if (j < self._num_rows - 1 and 
+                    not self._cells[i][j].has_bottom_wall and 
+                    not self._cells[i][j+1].visited):
+                    # Draw move downward
+                    self._cells[i][j].draw_move(self._cells[i][j+1])
+                    # Recursively try this path
+                    if self._solve_r(i, j+1):
+                        return True
+                    # If it didn't work, undo the move
+                    self._cells[i][j].draw_move(self._cells[i][j+1], undo=True)
+    
+                # If we've tried all directions and none worked, return False
+                return False

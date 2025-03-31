@@ -19,8 +19,9 @@ def main():
     cell4 = Cell(450, 50, 500, 100, win)
     cell4.has_bottom_wall = False
     cell4.draw()
-    
 
+    maze.solve()
+    
     win.wait_for_close()
 
 main()
